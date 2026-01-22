@@ -105,3 +105,11 @@ public class LoginViewModel {
         !email.isEmpty && !password.isEmpty && !isLoading
     }
 }
+
+// MARK: - ObservableObject Conformance
+
+#if canImport(Combine)
+extension LoginViewModel: ObservableObject {
+}
+#endif
+
