@@ -112,4 +112,3 @@ public class LoginViewModel {
 extension LoginViewModel: ObservableObject {
 }
 #endif
-
