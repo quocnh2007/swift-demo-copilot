@@ -9,6 +9,7 @@ This project implements a complete Login screen following strict MVVM (Model-Vie
 ## Features
 
 - ✅ **MVVM Architecture**: Clear separation between Model, View, and ViewModel
+- ✅ **Splash Screen**: Animated splash screen with 3-second timer and auto-navigation
 - ✅ **Async/Await**: Modern Swift concurrency for asynchronous operations
 - ✅ **SwiftUI**: Declarative UI framework
 - ✅ **Error Handling**: Comprehensive error handling for login failures
@@ -24,16 +25,19 @@ LoginFeature/
 │   ├── LoginResult.swift          # Immutable struct for login result
 │   └── LoginError.swift           # Error types for login failures
 ├── ViewModels/
-│   └── LoginViewModel.swift       # @MainActor ObservableObject handling business logic
+│   ├── LoginViewModel.swift       # @MainActor ObservableObject handling business logic
+│   └── SplashViewModel.swift      # ViewModel for splash screen timer
 ├── Views/
-│   └── LoginView.swift            # SwiftUI view for login screen
+│   ├── LoginView.swift            # SwiftUI view for login screen
+│   └── SplashView.swift           # SwiftUI view for splash screen
 └── Services/
     ├── AuthService.swift          # Protocol for authentication
     └── MockAuthService.swift      # Mock implementation for testing
 
 Tests/
 └── LoginFeatureTests/
-    └── LoginViewModelTests.swift  # Comprehensive unit tests
+    ├── LoginViewModelTests.swift  # Comprehensive unit tests
+    └── SplashViewModelTests.swift # Tests for splash screen timer
 ```
 
 ## Requirements
@@ -60,7 +64,25 @@ This is a Swift Package Manager project. To use it:
    ]
    ```
 
-### Using the Login Screen
+### Using the App
+
+The app now starts with a splash screen that displays for 3 seconds before navigating to the login screen:
+
+```swift
+import SwiftUI
+import LoginFeature
+
+@main
+struct YourApp: App {
+    var body: some Scene {
+        WindowGroup {
+            SplashView()  // Shows splash screen first, then auto-navigates to LoginView
+        }
+    }
+}
+```
+
+You can also use the login screen directly if you don't want the splash screen:
 
 ```swift
 import SwiftUI
@@ -145,6 +167,8 @@ Or use Xcode:
 ### Test Coverage
 
 The test suite includes:
+
+#### LoginViewModel Tests
 - ✅ Initial state validation
 - ✅ Successful login flow
 - ✅ Loading state management
@@ -154,6 +178,11 @@ The test suite includes:
 - ✅ Reset functionality
 - ✅ Multiple login attempts
 - ✅ Error message clearing
+
+#### SplashViewModel Tests
+- ✅ Initial state validation
+- ✅ Timer completion after 3 seconds
+- ✅ Navigation state before timer completes
 
 ## API Reference
 
