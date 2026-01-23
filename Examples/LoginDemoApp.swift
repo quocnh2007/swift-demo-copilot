@@ -11,7 +11,7 @@ import LoginFeature
 struct LoginDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            SplashView()
         }
     }
 }
