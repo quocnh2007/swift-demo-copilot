@@ -9,6 +9,10 @@ public final class SplashViewModel: ObservableObject {
     
     @Published public var shouldShowLogin: Bool = false
     
+    // MARK: - Private Properties
+    
+    private static let splashDurationNanoseconds: UInt64 = 3_000_000_000 // 3 seconds
+    
     // MARK: - Initialization
     
     public init() {}
@@ -18,7 +22,13 @@ public final class SplashViewModel: ObservableObject {
     /// Start the splash screen timer
     /// After 3 seconds, sets shouldShowLogin to true
     public func startTimer() async {
-        try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
-        self.shouldShowLogin = true
+        do {
+            try await Task.sleep(nanoseconds: Self.splashDurationNanoseconds)
+            self.shouldShowLogin = true
+        }
+        catch {
+            // Task was cancelled or sleep was interrupted
+            // Don't navigate to login in this case
+        }
     }
 }
