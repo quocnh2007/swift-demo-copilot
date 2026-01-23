@@ -33,13 +33,7 @@ final class SplashViewModelTests: XCTestCase {
         XCTAssertFalse(self.viewModel.shouldShowLogin)
         
         // When
-        self.viewModel.startTimer()
-        
-        // Then - Should still be false immediately
-        XCTAssertFalse(self.viewModel.shouldShowLogin)
-        
-        // Wait for 3.5 seconds (3 second timer + 0.5 buffer)
-        try? await Task.sleep(nanoseconds: 3_500_000_000)
+        await self.viewModel.startTimer()
         
         // Then - Should be true after timer completes
         XCTAssertTrue(self.viewModel.shouldShowLogin)
@@ -50,12 +44,17 @@ final class SplashViewModelTests: XCTestCase {
         XCTAssertFalse(self.viewModel.shouldShowLogin)
         
         // When
-        self.viewModel.startTimer()
+        let timerTask = Task {
+            await self.viewModel.startTimer()
+        }
         
         // Wait for 1 second (less than 3 seconds)
         try? await Task.sleep(nanoseconds: 1_000_000_000)
         
         // Then - Should still be false
         XCTAssertFalse(self.viewModel.shouldShowLogin)
+        
+        // Cancel the timer task to clean up
+        timerTask.cancel()
     }
 }

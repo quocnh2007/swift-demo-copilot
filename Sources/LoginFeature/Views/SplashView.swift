@@ -42,7 +42,9 @@ public struct SplashView: View {
                 }
             }
             .onAppear {
-                self.viewModel.startTimer()
+                Task {
+                    await self.viewModel.startTimer()
+                }
             }
         }
     }

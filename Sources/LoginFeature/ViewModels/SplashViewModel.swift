@@ -17,10 +17,8 @@ public final class SplashViewModel: ObservableObject {
     
     /// Start the splash screen timer
     /// After 3 seconds, sets shouldShowLogin to true
-    public func startTimer() {
-        Task {
-            try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
-            self.shouldShowLogin = true
-        }
+    public func startTimer() async {
+        try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
+        self.shouldShowLogin = true
     }
 }
